@@ -4,7 +4,8 @@ const express = require("express")
 const cors = require("cors")
 const corsOptions = require("./config/corsOptions")
 const connectDB = require("./config/dbConnection")
-const userRouter =require('./routs/recipeRoutes')
+
+
 
 const PORT = process.env.PORT || 7001
 const app = express()
@@ -14,15 +15,17 @@ connectDB()
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.static("public"))
-app.use(bodyParser.json());
-app.use('/', userRouter);
+
+// app.use(bodyParser.json());
+//app.use('/', userRouter);
 //routes
 
 app.get("/",(req,res)=>{
     res.send("this is the home page")
 })
 
-
+const userRouter =require('./routs/recipeRoutes')
+app.use('/',userRouter)
 
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB')
