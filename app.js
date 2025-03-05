@@ -10,11 +10,14 @@ const connectDB = require("./config/dbConnection")
 const PORT = process.env.PORT || 7001
 const app = express()
 connectDB()
+const userRouter =require('./routs/recipeRoutes')
+app.use('/',userRouter)
 //middlewares
 
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.static("public"))
+
 
 // app.use(bodyParser.json());
 //app.use('/', userRouter);
@@ -24,8 +27,7 @@ app.get("/",(req,res)=>{
     res.send("this is the home page")
 })
 
-const userRouter =require('./routs/recipeRoutes')
-app.use('/',userRouter)
+
 
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB')
