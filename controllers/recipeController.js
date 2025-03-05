@@ -16,3 +16,19 @@ exports.getAllRecipes = async (req, res) => {
       res.status(500).json({ message: 'Failed to get users' });
     }
   };
+
+  exports.GetRecipeById = async (req, res) => {
+    const { ResupeId } = req.params;
+    console.log(ResupeId)
+  
+    try {
+      const recipe = await Recipe.findOne({_id: ResupeId });
+      if (!recipe) {
+        return res.status(404).json({ message: 'Recipe not found' });
+      }
+      res.json(recipe);
+    } catch (error) {
+      console.error('Failed to get user:', error);
+      res.status(500).json({ message: 'Failed to get user' });
+    }
+  };
